@@ -6,7 +6,7 @@ const userSchema = new Schema({
   username: String,
   password: String,
   image: String,
-  registeres_companies: [{ type: Schema.Types.ObjectId, ref: "Company" }],
+  registered_companies: [{ type: Schema.Types.ObjectId, ref: "Company" }],
   average_investing_index: Number
 });
 
