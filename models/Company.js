@@ -24,6 +24,6 @@ const companySchema = new Schema({
   general_index_score: Number
 });
 
-const companySchema = mongoose.model("Company", companySchema);
+const Company = mongoose.model("Company", companySchema);
 
-module.exports = companySchema;
+module.exports = Company;
