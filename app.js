@@ -10,6 +10,7 @@ const logger = require("morgan");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
+const cors = require("cors");
 
 require("./config/passport");
 
@@ -56,6 +57,15 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Cors settings
+
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000"]
+  })
+);
 
 // Express View engine setup
 
