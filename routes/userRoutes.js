@@ -17,4 +17,28 @@ userRoutes.get("/panel", (req, res, next) => {
     });
 });
 
+//get username, password or image
+userRoutes.get("/profile", (req, res, next) => {
+  const userID = req.user._id;
+  User.findById(userID)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+//change username, password or image
+userRoutes.put("/profile", (req, res, next) => {
+  const userID = req.user._id;
+  User.findByIdAndUpdate(userID, req.body)
+    .then(updatedUser => {
+      res.status(200).json(updatedUser);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 module.exports = userRoutes;
