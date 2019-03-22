@@ -16,15 +16,17 @@ ratioRoutes.post("/createcompany", (req, res, next) => {
       {
         actives: req.body.actives,
         pasives: req.body.pasives,
+		totalSales: req.body.totalSales,
+		totalExpenses:req.body.totalExpenses,
         date_submission: req.body.date
       }
     ],
     owned_by: userID,
-    logo: req.body.logo,
     scores: [
       {
         acid_reason: req.body.actives / req.body.pasives,
         equity_vs_debt: req.body.actives - req.body.pasives,
+		totalRevenue: req.body.totalSales - req.body.totalExpenses,
         date_submission: req.body.date
       }
     ],

@@ -7,10 +7,26 @@ const Company = require("../models/Company");
 //To get the panel
 userRoutes.get("/panel", (req, res, next) => {
   const userID = req.user._id;
+  
+
+
   Company.find({ owned_by: userID })
-    .populate("owned_by")
     .then(data => {
-      res.json(data);
+		let tableData = data.map((current, index) => {
+      return {
+        key: index,
+        name: current.name,
+        generalScore: current.general_index_score,
+        del: current._id,
+        edit: current._id
+      };
+    });
+	
+	let theAnswer = {
+		tableData: tableData
+	}
+	
+      res.json(theAnswer);
     })
     .catch(err => {
       res.json(err);

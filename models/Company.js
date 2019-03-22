@@ -9,15 +9,17 @@ const companySchema = new Schema({
     {
       actives: Number,
       pasives: Number,
+	  totalSales: Number,
+	  totalExpenses: Number,
       date_submission: { type: Date, default: Date.now }
     }
   ],
   owned_by: { type: Schema.Types.ObjectId, ref: "User" },
-  logo: String,
   scores: [
     {
       acid_reason: Number,
       equity_vs_debt: Number,
+	  totalRevenue: Number,
       date_submission: { type: Date, default: Date.now }
     }
   ],
