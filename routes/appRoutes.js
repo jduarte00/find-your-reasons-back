@@ -1,42 +1,27 @@
 const express = require("express");
-const ratioRoutes = express.Router();
+const appRoutes = express.Router();
 const mongoose = require("mongoose");
 
-const User = require("./../models/User");
-const Company = require("../models/Company");
+const User = require("../models/User");
+const App = require("../models/App");
 
 //To create a new company
-ratioRoutes.post("/createcompany", (req, res, next) => {
+appRoutes.post("/createapp", (req, res, next) => {
   const userID = req.user._id;
 
-  Company.create({
+  App.create({
     name: req.body.name,
-    industry: req.body.industry,
-    initial_data: [
-      {
-        actives: req.body.actives,
-        pasives: req.body.pasives,
-		totalSales: req.body.totalSales,
-		totalExpenses:req.body.totalExpenses,
-        date_submission: req.body.date
-      }
-    ],
-    owned_by: userID,
-    scores: [
-      {
-        acid_reason: req.body.actives / req.body.pasives,
-        equity_vs_debt: req.body.actives - req.body.pasives,
-		totalRevenue: req.body.totalSales - req.body.totalExpenses,
-        date_submission: req.body.date
-      }
-    ],
-    general_index_score: req.body.actives + req.body.pasives
+    clasification: req.body.clasification,
+    size: req.body.size,
+    incomeGeneration: req.body.incomeGeneration,
+    supportedPlatforms: req.body.supportedPlatforms,
+    developed_by: userID
   })
-    .then(newCompany => {
+    .then(newApp => {
       User.find({ _id: userID }).then(user => {
-        user[0].registered_companies.push(newCompany._id);
+        user[0].registered_apps.push(newApp._id);
         user[0].save(user => {
-          res.json(newCompany);
+          res.json(newApp);
         });
       });
     })
@@ -46,7 +31,7 @@ ratioRoutes.post("/createcompany", (req, res, next) => {
 });
 // To view an existing company
 
-ratioRoutes.get("/viewcompany/:id", (req, res, next) => {
+appRoutes.get("/viewcompany/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
@@ -63,7 +48,7 @@ ratioRoutes.get("/viewcompany/:id", (req, res, next) => {
 
 // To edit an existing company
 
-ratioRoutes.put("/editcompany/:id", (req, res, next) => {
+appRoutes.put("/editcompany/:id", (req, res, next) => {
   /* The req.body is {
     "lol": "un lol",
     "lolz": "un lolz"
@@ -87,7 +72,7 @@ ratioRoutes.put("/editcompany/:id", (req, res, next) => {
 
 // To delete an existing company
 
-ratioRoutes.delete("/deletecompany/:id", (req, res, next) => {
+appRoutes.delete("/deleteapp/:id/", (req, res, next) => {
   const userID = req.user._id;
 
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -95,14 +80,14 @@ ratioRoutes.delete("/deletecompany/:id", (req, res, next) => {
     return;
   }
 
-  Company.findByIdAndRemove(req.params.id)
+  App.findByIdAndRemove(req.params.id)
     .then(() => {
       User.findById(userID).then(user => {
-        const index = user.registered_companies.indexOf(req.params.id);
-        user.registered_companies.splice(index, 1);
+        const index = user.registered_apps.indexOf(req.params.id);
+        user.registered_apps.splice(index, 1);
         user.save(newUser => {
           res.json({
-            message: `Company with ${req.params.id} is removed successfully.`
+            index: index
           });
         });
       });
@@ -114,7 +99,7 @@ ratioRoutes.delete("/deletecompany/:id", (req, res, next) => {
 
 //To view entrepreneur
 
-ratioRoutes.get("/viewentrepreneur", (req, res, next) => {
+appRoutes.get("/viewentrepreneur", (req, res, next) => {
   Company.find({ owned_by: req.user._id })
     .then(allCompanies => {
       res.status(200).json(allCompanies);
@@ -124,4 +109,4 @@ ratioRoutes.get("/viewentrepreneur", (req, res, next) => {
     });
 });
 
-module.exports = ratioRoutes;
+module.exports = appRoutes;

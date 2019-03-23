@@ -2,30 +2,26 @@ const express = require("express");
 const userRoutes = express.Router();
 
 const User = require("../models/User");
-const Company = require("../models/Company");
+const App = require("../models/App");
 
 //To get the panel
 userRoutes.get("/panel", (req, res, next) => {
   const userID = req.user._id;
-  
 
-
-  Company.find({ owned_by: userID })
+  App.find({ developed_by: userID })
     .then(data => {
-		let tableData = data.map((current, index) => {
-      return {
-        key: index,
-        name: current.name,
-        generalScore: current.general_index_score,
-        del: current._id,
-        edit: current._id
+      let tableData = data.map((current, index) => {
+        return {
+          key: index,
+          name: current.name,
+          view: current._id
+        };
+      });
+
+      let theAnswer = {
+        tableData: tableData
       };
-    });
-	
-	let theAnswer = {
-		tableData: tableData
-	}
-	
+
       res.json(theAnswer);
     })
     .catch(err => {

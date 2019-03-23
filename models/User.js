@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Company = require("./Company");
+const App = require("./App");
 
 const userSchema = new Schema({
   username: String,
   password: String,
   image: String,
-  registered_companies: [{ type: Schema.Types.ObjectId, ref: "Company" }],
-  average_investing_index: Number
+  registered_apps: [{ type: Schema.Types.ObjectId, ref: "App" }],
+  average_developer_index: Number
 });
 
 const User = mongoose.model("User", userSchema);
