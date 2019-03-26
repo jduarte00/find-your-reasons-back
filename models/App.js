@@ -9,6 +9,7 @@ const appSchema = new Schema({
   incomeGeneration: String,
   supportedPlatforms: [],
   months: Schema.Types.Array,
+  userTypes: [],
   developed_by: { type: Schema.Types.ObjectId, ref: "User" },
   kpiGlobal: [
     {
