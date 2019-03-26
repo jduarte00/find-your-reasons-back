@@ -5,16 +5,19 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 const App = require("../models/App");
 
-//To create a new company
+//To create a new app
 appRoutes.post("/createapp", (req, res, next) => {
   const userID = req.user._id;
+  const theData = req.body.infoToSend;
+
+  console.log(theData);
 
   App.create({
-    name: req.body.name,
-    clasification: req.body.clasification,
-    size: req.body.size,
-    incomeGeneration: req.body.incomeGeneration,
-    supportedPlatforms: req.body.supportedPlatforms,
+    name: theData.name,
+    category: theData.category,
+    size: theData.size,
+    incomeGeneration: theData.incomeGeneration,
+    supportedPlatforms: theData.supportedPlatforms,
     developed_by: userID
   })
     .then(newApp => {
@@ -31,15 +34,15 @@ appRoutes.post("/createapp", (req, res, next) => {
 });
 // To view an existing company
 
-appRoutes.get("/viewcompany/:id", (req, res, next) => {
+appRoutes.get("/viewapp/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
   }
 
-  Company.findById(req.params.id)
-    .then(theCompany => {
-      res.status(200).json(theCompany);
+  App.findById(req.params.id)
+    .then(theApp => {
+      res.status(200).json(theApp);
     })
     .catch(err => {
       console.log(err);

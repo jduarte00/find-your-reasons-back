@@ -4,10 +4,10 @@ const User = require("./User");
 
 const appSchema = new Schema({
   name: String,
-  clasification: String,
+  category: String,
   size: String,
   incomeGeneration: String,
-  supportedPlatforms: Schema.Types.Array,
+  supportedPlatforms: [],
   months: Schema.Types.Array,
   developed_by: { type: Schema.Types.ObjectId, ref: "User" },
   kpiGlobal: [
