@@ -18,6 +18,7 @@ module.exports.addNewApp = (req, res, next) => {
     incomeGeneration: theData.incomeGeneration,
     supportedPlatforms: theData.supportedPlatforms,
     userTypes: theData.userTypes,
+    sellingPrice: theData.sellingPrice,
     developed_by: userID
   })
     .then(newApp => {

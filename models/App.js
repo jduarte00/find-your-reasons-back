@@ -10,6 +10,7 @@ const appSchema = new Schema({
   supportedPlatforms: [],
   months: Schema.Types.Array,
   userTypes: [],
+  sellingPrice: Number,
   developed_by: { type: Schema.Types.ObjectId, ref: "User" },
   kpiGlobal: [
     {
