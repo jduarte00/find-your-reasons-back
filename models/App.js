@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const User = require("./User");
+const Month = require("./Month");
 
 const appSchema = new Schema({
   name: String,
@@ -8,7 +9,7 @@ const appSchema = new Schema({
   size: String,
   incomeGeneration: String,
   supportedPlatforms: [],
-  months: Schema.Types.Array,
+  months: [{ type: Schema.Types.ObjectId, ref: "Month" }],
   userTypes: [],
   sellingPrice: Number,
   developed_by: { type: Schema.Types.ObjectId, ref: "User" },
