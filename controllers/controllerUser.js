@@ -52,3 +52,22 @@ module.exports.changeUserInfo = (req, res, next) => {
       console.log(err);
     });
 };
+
+// to get the name and income type of all the apps
+
+module.exports.geIncomeType = (req, res, next) => {
+  const userID = req.user._id;
+  User.findById(userID)
+    .populate("registered_apps")
+    .then(user => {
+      const nameOfApps = user.registered_apps.map(app => {
+        return {
+          name: app.name,
+          type: app.incomeGeneration,
+          users: app.userTypes,
+          appID: app._id
+        };
+      });
+      res.status(200).json(nameOfApps);
+    });
+};
