@@ -19,4 +19,7 @@ appRoutes.put("/editcompany/:id", appController.editApp);
 
 appRoutes.delete("/deleteapp/:id/", appController.deleteApp);
 
+// To create a new month
+
+appRoutes.post("/newmonth/:id", appController.createMonth);
 module.exports = appRoutes;
