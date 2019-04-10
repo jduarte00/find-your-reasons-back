@@ -12,4 +12,7 @@ userRoutes.get("/profile", userController.getUserInfo);
 //change username, password or image
 userRoutes.put("/profile", userController.changeUserInfo);
 
+//get names and type of income off al the apps of the user
+userRoutes.get("/get-income-type", userController.geIncomeType);
+
 module.exports = userRoutes;
