@@ -7,10 +7,13 @@ const appSchema = new Schema({
   name: String,
   category: String,
   size: String,
+  createdOn: { type: Date, default: Date.now },
+  totalCostOfDevelopment: Number,
   incomeGeneration: String,
   supportedPlatforms: [],
   months: [{ type: Schema.Types.ObjectId, ref: "Month" }],
   userTypes: [],
+  lastMonth: { type: Schema.Types.ObjectId, ref: "Month" },
   sellingPrice: Number,
   developed_by: { type: Schema.Types.ObjectId, ref: "User" },
   kpiGlobal: [
